@@ -2,6 +2,10 @@
 
 # dependencies
 /node_modules
+/next-app/node_modules
+/native-app/node_modules
+/native-app/.expo
+/native-app/.expo-shared
 /.pnp
 .pnp.*
 .yarn/*
