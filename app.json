@@ -9,26 +9,26 @@
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#faf7f5"
+      "resizeMode": "contain",
+      "backgroundColor": "#F6EFEA"
     },
     "ios": {
       "supportsTablet": true,
       "splash": {
         "image": "./assets/splash.png",
-        "resizeMode": "cover",
-        "backgroundColor": "#faf7f5"
+        "resizeMode": "contain",
+        "backgroundColor": "#F6EFEA"
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.jpeg",
-        "backgroundColor": "#faf7f5"
+        "backgroundColor": "#F6EFEA"
       },
       "splash": {
         "image": "./assets/splash.png",
-        "resizeMode": "cover",
-        "backgroundColor": "#faf7f5"
+        "resizeMode": "contain",
+        "backgroundColor": "#F6EFEA"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.shopease.app"
@@ -41,8 +41,8 @@
         "expo-splash-screen",
         {
           "image": "./assets/splash.png",
-          "resizeMode": "cover",
-          "backgroundColor": "#faf7f5"
+          "resizeMode": "contain",
+          "backgroundColor": "#F6EFEA"
         }
       ]
     ]
