@@ -19,4 +19,10 @@ export type OrderSummary = {
   id: string;
   items: CartItem[];
   total: number;
+  address?: {
+    line: string;
+    city: string;
+    state: string;
+    pincode: string;
+  };
 };

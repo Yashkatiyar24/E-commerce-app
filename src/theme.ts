@@ -1,11 +1,11 @@
 export const palette = {
-  background: "#f4efe6",
-  foreground: "#1f1a17",
-  muted: "#6f665d",
-  card: "#fdfbf7",
-  accent: "#e8dccd",
-  outline: "#e4dbd0",
-  shadow: "0 14px 40px rgba(0, 0, 0, 0.08)",
+  background: "#f6f6f6",
+  foreground: "#0c0c0c",
+  muted: "#6b6b6b",
+  card: "#ffffff",
+  accent: "#111111",
+  outline: "#e2e2e2",
+  shadow: "0 8px 24px rgba(0, 0, 0, 0.05)",
 };
 
 export const spacing = {

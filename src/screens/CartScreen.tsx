@@ -12,35 +12,49 @@ import { RootStackParamList } from "../navigation/types";
 import { palette } from "../theme";
 import { useCart } from "../context/CartContext";
 import { CartItem } from "../types";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Swipeable } from "react-native-gesture-handler";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Cart">;
 
 export default function CartScreen({ navigation }: Props) {
   const { items, updateQuantity, removeFromCart, cartTotal } = useCart();
+  const insets = useSafeAreaInsets();
 
   return (
-    <ScrollView
-      style={styles.safe}
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.header}>
-        <View style={styles.headerLeft}>
+    <View style={[styles.safe, { paddingTop: insets.top || 0 }]}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.container,
+          { paddingBottom: (insets.bottom || 12) + 16 },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.navRow}>
           <TouchableOpacity
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
             <Text style={styles.backIcon}>←</Text>
           </TouchableOpacity>
+          <View style={styles.cartBlob}>
+            <Text style={styles.cartBlobIcon}>🛒</Text>
+          </View>
+        </View>
+
+        <View style={styles.brandBar}>
+          <Text style={styles.brandText}>Shopease</Text>
+        </View>
+
+        <View style={styles.header}>
           <View>
             <Text style={styles.title}>Your cart</Text>
             <Text style={styles.caption}>Swipe left on an item to remove</Text>
           </View>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>{items.length} items</Text>
+          </View>
         </View>
-        <View style={styles.badge}>
-          <Text style={styles.badgeText}>{items.length} items</Text>
-        </View>
-      </View>
 
       {items.length === 0 && (
         <View style={styles.empty}>
@@ -63,18 +77,22 @@ export default function CartScreen({ navigation }: Props) {
       </View>
 
       <View style={styles.summary}>
-        <View style={styles.row}>
-          <Text style={styles.caption}>Subtotal</Text>
-          <Text style={styles.value}>€{cartTotal}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.caption}>Shipping</Text>
-          <Text style={styles.value}>Included</Text>
-        </View>
-        <View style={styles.totalRow}>
-          <Text style={styles.totalLabel}>Total</Text>
-          <Text style={styles.totalLabel}>€{cartTotal}</Text>
-        </View>
+        {cartTotal > 0 ? (
+          <>
+            <View style={styles.row}>
+              <Text style={styles.caption}>Subtotal</Text>
+              <Text style={styles.value}>€{cartTotal}</Text>
+            </View>
+            <View style={styles.row}>
+              <Text style={styles.caption}>Shipping</Text>
+              <Text style={styles.value}>Included</Text>
+            </View>
+            <View style={styles.totalRow}>
+              <Text style={styles.totalLabel}>Total</Text>
+              <Text style={styles.totalLabel}>€{cartTotal}</Text>
+            </View>
+          </>
+        ) : null}
         <TouchableOpacity
           style={[
             styles.checkoutButton,
@@ -86,7 +104,8 @@ export default function CartScreen({ navigation }: Props) {
           <Text style={styles.checkoutText}>Proceed to checkout</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -99,45 +118,72 @@ function CartItemRow({
   onRemove: () => void;
   onUpdate: (qty: number) => void;
 }) {
+  let swipeableRef: Swipeable | null = null;
+
   return (
-    <View style={styles.itemCard}>
-      <View style={styles.itemImageWrapper}>
-        <Image source={{ uri: item.product.image }} style={styles.itemImage} />
-      </View>
-      <View style={styles.itemMeta}>
-        <View style={styles.itemHeader}>
-          <View>
-            <Text style={styles.itemName}>{item.product.name}</Text>
-            <Text style={styles.itemCaption}>
-              €{item.product.price} • {item.product.category}
-            </Text>
-          </View>
-          <TouchableOpacity onPress={onRemove}>
-            <Text style={styles.removeText}>Remove</Text>
-          </TouchableOpacity>
+    <Swipeable
+      ref={(ref) => {
+        swipeableRef = ref;
+      }}
+      renderRightActions={() => (
+        <View style={styles.swipeRemove}>
+          <Text style={styles.swipeRemoveText}>Remove</Text>
         </View>
-        <View style={styles.itemFooter}>
-          <View style={styles.quantityControls}>
-            <TouchableOpacity
-              style={styles.quantityButton}
-              onPress={() => onUpdate(Math.max(1, item.quantity - 1))}
-            >
-              <Text style={styles.quantityText}>–</Text>
-            </TouchableOpacity>
-            <Text style={styles.quantityValue}>{item.quantity}</Text>
-            <TouchableOpacity
-              style={styles.quantityButton}
-              onPress={() => onUpdate(item.quantity + 1)}
-            >
-              <Text style={styles.quantityText}>+</Text>
-            </TouchableOpacity>
+      )}
+      onSwipeableOpen={(direction) => {
+        if (direction === "right") {
+          onRemove();
+          swipeableRef?.close();
+        }
+      }}
+      overshootFriction={8}
+    >
+      <View style={styles.itemCard}>
+        <View style={styles.itemImageWrapper}>
+          <Image source={{ uri: item.product.image }} style={styles.itemImage} />
+        </View>
+        <View style={styles.itemMeta}>
+          <View style={styles.itemHeader}>
+            <View>
+              <Text style={styles.itemName}>{item.product.name}</Text>
+              <Text style={styles.itemCaption}>
+                {item.product.price > 0 ? `€${item.product.price} • ` : ""}
+                {item.product.category}
+              </Text>
+            </View>
+            <TouchableOpacity onPress={onRemove}>
+                <Text style={styles.removeText}>Remove</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.itemFooter}>
+              <View style={styles.quantityControls}>
+                <TouchableOpacity
+                  style={styles.quantityButton}
+                  onPress={() => {
+                    const next = item.quantity - 1;
+                    if (next <= 0) onRemove();
+                    else onUpdate(next);
+                  }}
+                >
+                  <Text style={styles.quantityText}>–</Text>
+                </TouchableOpacity>
+              <Text style={styles.quantityValue}>{item.quantity}</Text>
+              <TouchableOpacity
+                style={styles.quantityButton}
+                onPress={() => onUpdate(item.quantity + 1)}
+              >
+                <Text style={styles.quantityText}>+</Text>
+              </TouchableOpacity>
+            </View>
+            {item.product.price > 0 ? (
+              <Text style={styles.itemTotal}>
+                €{item.product.price * item.quantity}
+              </Text>
+            ) : null}
           </View>
-          <Text style={styles.itemTotal}>
-            €{item.product.price * item.quantity}
-          </Text>
         </View>
       </View>
-    </View>
+    </Swipeable>
   );
 }
 
@@ -147,9 +193,37 @@ const styles = StyleSheet.create({
     backgroundColor: palette.background,
   },
   container: {
-    padding: 16,
-    gap: 14,
-    paddingBottom: 30,
+    padding: 12,
+    gap: 12,
+    paddingBottom: 24,
+  },
+  navRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 6,
+  },
+  cartBlob: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: palette.outline,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cartBlobIcon: {
+    fontSize: 18,
+  },
+  brandBar: {
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  brandText: {
+    fontSize: 18,
+    fontWeight: "700",
+    fontFamily: "Helvetica",
   },
   header: {
     flexDirection: "row",
@@ -200,8 +274,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 12,
     backgroundColor: "#fff",
-    borderRadius: 24,
-    padding: 12,
+    borderRadius: 20,
+    padding: 10,
     borderWidth: 1,
     borderColor: palette.outline,
   },
@@ -226,8 +300,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 8,
   },
-  itemName: { fontSize: 14, fontWeight: "700" },
-  itemCaption: { fontSize: 12, color: palette.muted },
+  itemName: { fontSize: 14, fontWeight: "700", fontFamily: "Helvetica" },
+  itemCaption: { fontSize: 12, color: palette.muted, fontFamily: "Helvetica" },
   removeText: { fontSize: 13, fontWeight: "600", color: palette.muted },
   itemFooter: {
     flexDirection: "row",
@@ -291,5 +365,17 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "700",
     fontSize: 15,
+  },
+  swipeRemove: {
+    backgroundColor: "#e63946",
+    justifyContent: "center",
+    alignItems: "flex-end",
+    paddingHorizontal: 16,
+    borderRadius: 18,
+    marginVertical: 4,
+  },
+  swipeRemoveText: {
+    color: "#fff",
+    fontWeight: "700",
   },
 });

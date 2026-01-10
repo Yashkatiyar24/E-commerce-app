@@ -10,21 +10,26 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
 import { useCart } from "../context/CartContext";
 import { palette } from "../theme";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Confirmation">;
 
 export default function ConfirmationScreen({ navigation, route }: Props) {
   const { lastOrder, resetOrder } = useCart();
+  const insets = useSafeAreaInsets();
   const orderId = route.params?.orderId ?? lastOrder?.id ?? "SO-000000";
   const order = lastOrder;
 
   return (
-    <ScrollView
-      style={styles.safe}
-      contentContainerStyle={styles.container}
-      showsVerticalScrollIndicator={false}
-    >
-      <View style={styles.iconWrap}>
+    <View style={[styles.safe, { paddingTop: insets.top || 0 }]}>
+      <ScrollView
+        contentContainerStyle={[
+          styles.container,
+          { paddingBottom: (insets.bottom || 12) + 20 },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.iconWrap}>
         <Text style={styles.icon}>✅</Text>
       </View>
       <Text style={styles.title}>Order placed</Text>
@@ -40,15 +45,28 @@ export default function ConfirmationScreen({ navigation, route }: Props) {
               <Text style={styles.summaryText}>
                 {item.product.name} × {item.quantity}
               </Text>
-              <Text style={styles.summaryValue}>
-                €{item.product.price * item.quantity}
-              </Text>
+              {item.product.price > 0 ? (
+                <Text style={styles.summaryValue}>
+                  €{item.product.price * item.quantity}
+                </Text>
+              ) : null}
             </View>
           ))}
-          <View style={styles.totalRow}>
-            <Text style={styles.totalText}>Total</Text>
-            <Text style={styles.totalText}>€{order.total}</Text>
-          </View>
+          {order.address && (
+            <View style={styles.addressBlock}>
+              <Text style={styles.addressLabel}>Shipping address</Text>
+              <Text style={styles.addressText}>{order.address.line}</Text>
+              <Text style={styles.addressText}>
+                {order.address.city}, {order.address.state} {order.address.pincode}
+              </Text>
+            </View>
+          )}
+          {order.total > 0 ? (
+            <View style={styles.totalRow}>
+              <Text style={styles.totalText}>Total</Text>
+              <Text style={styles.totalText}>€{order.total}</Text>
+            </View>
+          ) : null}
         </View>
       ) : (
         <View style={styles.summary}>
@@ -65,15 +83,16 @@ export default function ConfirmationScreen({ navigation, route }: Props) {
       >
         <Text style={styles.buttonText}>Continue shopping</Text>
       </TouchableOpacity>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: palette.background },
   container: {
-    padding: 16,
-    gap: 12,
+    padding: 12,
+    gap: 10,
     alignItems: "center",
   },
   iconWrap: {
@@ -90,8 +109,8 @@ const styles = StyleSheet.create({
   summary: {
     alignSelf: "stretch",
     backgroundColor: "#fff",
-    borderRadius: 24,
-    padding: 16,
+    borderRadius: 20,
+    padding: 12,
     borderWidth: 1,
     borderColor: palette.outline,
     gap: 10,
@@ -103,6 +122,14 @@ const styles = StyleSheet.create({
   },
   summaryText: { fontSize: 14 },
   summaryValue: { fontSize: 14, fontWeight: "700" },
+  addressBlock: {
+    borderTopWidth: 1,
+    borderTopColor: palette.outline,
+    paddingTop: 8,
+    gap: 2,
+  },
+  addressLabel: { fontSize: 13, fontWeight: "700" },
+  addressText: { fontSize: 13, color: palette.muted },
   totalRow: {
     flexDirection: "row",
     justifyContent: "space-between",
