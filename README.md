@@ -8,25 +8,38 @@ A modern, minimalist e-commerce mobile application built with **React Native** a
 
 <p align="center">
   <img src="./screenshots/home.png" width="250" alt="Home Screen" />
+  &nbsp;&nbsp;&nbsp;
   <img src="./screenshots/cart.png" width="250" alt="Cart Screen" />
+  &nbsp;&nbsp;&nbsp;
   <img src="./screenshots/checkout.png" width="250" alt="Checkout Screen" />
 </p>
 
-| Home Screen | Cart | Checkout |
-|:-----------:|:----:|:--------:|
-| Browse products with search | Manage cart items | Multi-step checkout |
+<table align="center">
+  <tr>
+    <th>Home Screen</th>
+    <th>Cart</th>
+    <th>Checkout</th>
+  </tr>
+  <tr>
+    <td align="center">Browse products with search</td>
+    <td align="center">Manage cart items</td>
+    <td align="center">Multi-step checkout</td>
+  </tr>
+</table>
 
 ---
 
 ## ✨ Features
 
-- 🔍 **Product Search** - Real-time search filtering by name and category
-- 🛒 **Shopping Cart** - Add, remove, and update quantities with swipe gestures
-- 📦 **Product Details** - Full product view with size selection
-- 💳 **Multi-step Checkout** - User details, shipping address, and payment selection
-- 💾 **Persistent Cart** - Cart data saved locally using AsyncStorage
-- 🎨 **Clean UI** - Modern, minimalist design with smooth animations
-- 💰 **INR Currency** - Prices displayed in Indian Rupees (₹)
+| Feature | Description |
+|---------|-------------|
+| 🔍 **Product Search** | Real-time search filtering by name and category |
+| 🛒 **Shopping Cart** | Add, remove, and update quantities with swipe gestures |
+| 📦 **Product Details** | Full product view with size selection |
+| 💳 **Multi-step Checkout** | User details, shipping address, and payment selection |
+| �� **Persistent Cart** | Cart data saved locally using AsyncStorage |
+| 🎨 **Clean UI** | Modern, minimalist design with smooth animations |
+| 💰 **INR Currency** | Prices displayed in Indian Rupees (₹) |
 
 ---
 
@@ -48,22 +61,25 @@ A modern, minimalist e-commerce mobile application built with **React Native** a
 
 This app uses **React Context API** for global state management:
 
-\`\`\`
+```
 src/
 ├── context/
 │   └── CartContext.tsx    # Cart state with AsyncStorage persistence
-\`\`\`
+```
 
 ### Why Context API?
 
-- ✅ **Lightweight** - No external dependencies needed
-- ✅ **Built-in** - Native to React, no learning curve
-- ✅ **Sufficient** - Perfect for small-to-medium apps
-- ✅ **Persistent** - Combined with AsyncStorage for data persistence across sessions
+| Reason | Description |
+|--------|-------------|
+| ✅ **Lightweight** | No external dependencies needed |
+| ✅ **Built-in** | Native to React, no learning curve |
+| ✅ **Sufficient** | Perfect for small-to-medium apps |
+| ✅ **Persistent** | Combined with AsyncStorage for data persistence |
 
-### Cart State Features:
+### Cart State Features
+
 - Add/remove items from cart
-- Update item quantities  
+- Update item quantities
 - Calculate subtotals and totals
 - Persist cart data between app restarts
 - Clear cart after successful checkout
@@ -72,33 +88,33 @@ src/
 
 ## 📂 Project Structure
 
-\`\`\`
+```
 E-commerce-app/
-├── App.tsx                    # Root component with custom splash screen
-├── index.ts                   # Entry point
-├── app.json                   # Expo configuration
-├── tsconfig.json              # TypeScript configuration
+├── App.tsx                         # Root component with custom splash screen
+├── index.ts                        # Entry point
+├── app.json                        # Expo configuration
+├── tsconfig.json                   # TypeScript configuration
 ├── src/
 │   ├── context/
-│   │   └── CartContext.tsx    # Cart state management with persistence
+│   │   └── CartContext.tsx         # Cart state management with persistence
 │   ├── data/
-│   │   └── products.ts        # Product catalog & categories
+│   │   └── products.ts             # Product catalog & categories
 │   ├── navigation/
-│   │   └── types.ts           # Navigation type definitions
+│   │   └── types.ts                # Navigation type definitions
 │   ├── screens/
-│   │   ├── HomeScreen.tsx     # Product grid with search bar
-│   │   ├── ProductDetailScreen.tsx  # Product details & add to cart
-│   │   ├── CartScreen.tsx     # Shopping cart management
-│   │   ├── CheckoutScreen.tsx # Multi-step checkout form
-│   │   └── ConfirmationScreen.tsx   # Order confirmation
-│   ├── theme.ts               # Color palette & design tokens
-│   └── types.ts               # TypeScript interfaces
+│   │   ├── HomeScreen.tsx          # Product grid with search bar
+│   │   ├── ProductDetailScreen.tsx # Product details & add to cart
+│   │   ├── CartScreen.tsx          # Shopping cart management
+│   │   ├── CheckoutScreen.tsx      # Multi-step checkout form
+│   │   └── ConfirmationScreen.tsx  # Order confirmation
+│   ├── theme.ts                    # Color palette & design tokens
+│   └── types.ts                    # TypeScript interfaces
 ├── assets/
-│   ├── splash-full.png        # Custom splash screen image
-│   ├── icon.png               # App icon
-│   └── adaptive-icon.png      # Android adaptive icon
-└── screenshots/               # App screenshots for README
-\`\`\`
+│   ├── splash-full.png             # Custom splash screen image
+│   ├── icon.png                    # App icon
+│   └── adaptive-icon.png           # Android adaptive icon
+└── screenshots/                    # App screenshots for README
+```
 
 ---
 
@@ -108,38 +124,44 @@ E-commerce-app/
 
 - **Node.js** v18 or higher
 - **npm** or **yarn**
-- **Expo Go** app on your mobile device ([Android](https://play.google.com/store/apps/details?id=host.exp.exponent) | [iOS](https://apps.apple.com/app/expo-go/id982107779))
+- **Expo Go** app on your mobile device
+  - [Android](https://play.google.com/store/apps/details?id=host.exp.exponent)
+  - [iOS](https://apps.apple.com/app/expo-go/id982107779)
 
 ### Installation
 
-1. **Clone the repository**
-   \`\`\`bash
-   git clone https://github.com/Yashkatiyar24/E-commerce-app.git
-   cd E-commerce-app
-   \`\`\`
+**1. Clone the repository**
 
-2. **Install dependencies**
-   \`\`\`bash
-   npm install
-   \`\`\`
+```bash
+git clone https://github.com/Yashkatiyar24/E-commerce-app.git
+cd E-commerce-app
+```
 
-3. **Start the development server**
-   \`\`\`bash
-   npm start
-   \`\`\`
+**2. Install dependencies**
 
-4. **Run on your device**
-   - Scan the QR code with **Expo Go** (Android) or Camera app (iOS)
-   - Or press \`a\` for Android emulator / \`i\` for iOS simulator
+```bash
+npm install
+```
+
+**3. Start the development server**
+
+```bash
+npm start
+```
+
+**4. Run on your device**
+
+- Scan the QR code with **Expo Go** (Android) or Camera app (iOS)
+- Or press `a` for Android emulator / `i` for iOS simulator
 
 ### Available Scripts
 
 | Command | Description |
 |---------|-------------|
-| \`npm start\` | Start Expo development server |
-| \`npm run android\` | Run on Android device/emulator |
-| \`npm run ios\` | Run on iOS device/simulator |
-| \`npm run web\` | Run in web browser |
+| `npm start` | Start Expo development server |
+| `npm run android` | Run on Android device/emulator |
+| `npm run ios` | Run on iOS device/simulator |
+| `npm run web` | Run in web browser |
 
 ---
 
@@ -147,7 +169,7 @@ E-commerce-app/
 
 To create a standalone APK file:
 
-\`\`\`bash
+```bash
 # Install EAS CLI globally
 npm install -g eas-cli
 
@@ -159,7 +181,7 @@ eas build:configure
 
 # Build APK for Android
 eas build -p android --profile preview
-\`\`\`
+```
 
 The APK will be available for download from your Expo dashboard once the build completes.
 
@@ -181,18 +203,20 @@ The APK will be available for download from your Expo dashboard once the build c
 
 | Decision | Pros | Cons |
 |----------|------|------|
-| **Context API over Redux** | Simpler setup, less boilerplate, built-in to React | Less scalable for very complex state |
-| **AsyncStorage over SQLite** | Easy to implement, good for key-value storage | Limited query capabilities |
-| **Expo Managed Workflow** | Faster development, OTA updates, easier builds | Limited native module access |
-| **External Image URLs** | Smaller app bundle size | Requires internet, slower initial load |
-| **No Backend Server** | Simpler architecture, easier to demo | No real order processing or inventory |
+| **Context API over Redux** | Simpler setup, less boilerplate | Less scalable for complex state |
+| **AsyncStorage over SQLite** | Easy to implement | Limited query capabilities |
+| **Expo Managed Workflow** | Faster development, OTA updates | Limited native module access |
+| **External Image URLs** | Smaller app bundle size | Requires internet connection |
+| **No Backend Server** | Simpler architecture | No real order processing |
 
 ### Design Decisions
 
-1. **Custom Splash Screen in React** - Native splash doesn't work in Expo Go, so implemented a React-based splash that shows for 3 seconds
-2. **Swipe-to-Delete in Cart** - Intuitive mobile UX pattern for removing items
-3. **Multi-step Checkout** - Better UX than single long form, allows validation at each step
-4. **Real-time Search** - Filters as user types for immediate feedback
+| Decision | Reasoning |
+|----------|-----------|
+| **Custom Splash Screen** | Native splash doesn't work in Expo Go |
+| **Swipe-to-Delete** | Intuitive mobile UX pattern for removing items |
+| **Multi-step Checkout** | Better UX than single long form |
+| **Real-time Search** | Filters as user types for immediate feedback |
 
 ---
 
@@ -213,8 +237,10 @@ The APK will be available for download from your Expo dashboard once the build c
 
 ## 🐛 Known Issues
 
-- Native splash screen only works in standalone builds (not Expo Go)
-- Cart badge count may briefly show stale data on first load
+| Issue | Status |
+|-------|--------|
+| Native splash screen only works in standalone builds | Expected behavior |
+| Cart badge may briefly show stale data on first load | Minor |
 
 ---
 
@@ -224,20 +250,20 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## ��‍💻 Author
+## 👨‍💻 Author
 
 **Yash Katiyar**
 
-[![GitHub](https://img.shields.io/badge/GitHub-@Yashkatiyar24-181717?style=flat&logo=github)](https://github.com/Yashkatiyar24)
+[![GitHub](https://img.shields.io/badge/GitHub-@Yashkatiyar24-181717?style=for-the-badge&logo=github)](https://github.com/Yashkatiyar24)
 
 ---
 
 <p align="center">
-  <b>Made with ❤️ using React Native & Expo</b>
+  <strong>Made with ❤️ using React Native & Expo</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React_Native-0.81-61DAFB?style=for-the-badge&logo=react" />
-  <img src="https://img.shields.io/badge/Expo-SDK_54-000020?style=for-the-badge&logo=expo" />
-  <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript" />
+  <img src="https://img.shields.io/badge/React_Native-0.81-61DAFB?style=for-the-badge&logo=react" alt="React Native" />
+  <img src="https://img.shields.io/badge/Expo-SDK_54-000020?style=for-the-badge&logo=expo" alt="Expo" />
+  <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript" alt="TypeScript" />
 </p>
