@@ -45,11 +45,11 @@ export default function App() {
   if (showSplash) {
     return (
       <View style={styles.splashContainer}>
-        <StatusBar style="dark" />
+        <StatusBar style="dark" backgroundColor="#FAF5F0" />
         <Image
-          source={require("./assets/logo.jpeg")}
+          source={require("./assets/splash-full.png")}
           style={styles.splashLogo}
-          resizeMode="contain"
+          resizeMode="cover"
         />
       </View>
     );
@@ -89,12 +89,12 @@ export default function App() {
 const styles = StyleSheet.create({
   splashContainer: {
     flex: 1,
-    backgroundColor: "#F6EFEA",
+    backgroundColor: "#FAF5F0",
     justifyContent: "center",
     alignItems: "center",
   },
   splashLogo: {
-    width: width * 0.85,
-    height: height * 0.5,
+    width: width,
+    height: height,
   },
 });
