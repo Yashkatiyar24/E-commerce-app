@@ -65,25 +65,6 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
         >
           <Image source={{ uri: selectedImage }} style={styles.heroImage} />
         </View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.thumbRow}
-          >
-            {product.gallery.map((img) => (
-              <TouchableOpacity
-                key={img}
-                style={[
-                  styles.thumbButton,
-                  selectedImage === img && styles.thumbButtonActive,
-                ]}
-                onPress={() => setSelectedImage(img)}
-                activeOpacity={0.9}
-              >
-                <Image source={{ uri: img }} style={styles.thumbImage} />
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
         </View>
 
       <View style={styles.section}>
@@ -187,12 +168,12 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     overflow: "hidden",
     width: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: "#f5f5f5",
   },
   heroImage: {
     width: "100%",
     height: "100%",
-    resizeMode: "cover",
+    resizeMode: "contain",
   },
   thumbRow: {
     gap: 8,

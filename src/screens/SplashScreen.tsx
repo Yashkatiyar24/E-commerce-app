@@ -54,7 +54,7 @@ export default function SplashScreen({ navigation }: Props) {
             transform: [{ scale: scaleAnim }],
           },
         ]}
-        resizeMode="contain"
+        resizeMode="cover"
       />
     </View>
   );

@@ -8,6 +8,7 @@ import {
   View,
   StatusBar,
   Platform,
+  TextInput,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/types";
@@ -26,6 +27,7 @@ export default function HomeScreen({ navigation }: Props) {
   const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
   const [recentlyAdded, setRecentlyAdded] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const horizontalPadding = 0;
   const gap = 0;
@@ -40,6 +42,13 @@ export default function HomeScreen({ navigation }: Props) {
     setTimeout(() => setRecentlyAdded(null), 900);
   };
 
+  // Filter products based on search query
+  const filteredProducts = products.filter(
+    (product) =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      product.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={palette.background} />
@@ -49,27 +58,51 @@ export default function HomeScreen({ navigation }: Props) {
         <View>
           <Text style={styles.logoLabel}>Shopease</Text>
         </View>
-        <TouchableOpacity
-          style={styles.cartButton}
-          onPress={() => navigation.navigate("Cart")}
-          accessibilityLabel="Open cart"
-        >
-          <Text style={styles.cartIcon}>🛒</Text>
-          {cartCount > 0 && (
-            <View style={styles.cartBadge}>
-              <Text style={styles.cartBadgeText}>{cartCount}</Text>
-            </View>
-          )}
-        </TouchableOpacity>
+        <View style={styles.headerRight}>
+          {/* Search Bar */}
+          <View style={styles.searchContainer}>
+            <Text style={styles.searchIcon}>🔍</Text>
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Search..."
+              placeholderTextColor={palette.muted}
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+            {searchQuery.length > 0 && (
+              <TouchableOpacity onPress={() => setSearchQuery("")}>
+                <Text style={styles.clearIcon}>✕</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+          {/* Cart Button */}
+          <TouchableOpacity
+            style={styles.cartButton}
+            onPress={() => navigation.navigate("Cart")}
+            accessibilityLabel="Open cart"
+          >
+            <Text style={styles.cartIcon}>🛒</Text>
+            {cartCount > 0 && (
+              <View style={styles.cartBadge}>
+                <Text style={styles.cartBadgeText}>{cartCount}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
       </View>
 
       <FlatList
-        data={products}
+        data={filteredProducts}
         keyExtractor={(item) => item.id}
         numColumns={2}
         contentContainerStyle={styles.listContent}
         columnWrapperStyle={styles.columnWrapper}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No products found</Text>
+          </View>
+        }
         renderItem={({ item }) => (
           <ProductTile
             product={item}
@@ -176,6 +209,37 @@ const styles = StyleSheet.create({
     paddingTop: 4,
     backgroundColor: palette.background,
   },
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderWidth: 1,
+    borderColor: palette.outline,
+    width: 160,
+  },
+  searchIcon: {
+    fontSize: 12,
+    marginRight: 6,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 13,
+    color: palette.foreground,
+    padding: 0,
+  },
+  clearIcon: {
+    fontSize: 12,
+    color: palette.muted,
+    marginLeft: 4,
+  },
   logoLabel: {
     fontSize: 16,
     letterSpacing: 1.5,
@@ -211,6 +275,16 @@ const styles = StyleSheet.create({
     fontSize: 10,
     textAlign: "center",
     fontWeight: "700",
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 100,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: palette.muted,
   },
   listContent: {
     paddingBottom: 0,

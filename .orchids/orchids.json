@@ -1,7 +1,0 @@
-{
-  "projectId": "bb63d2d4-3302-463b-8d2e-0761ca72f243",
-  "createdAt": 1767955437845,
-  "startupCommands": [
-    "bun install && npx next dev -p 3000"
-  ]
-}
