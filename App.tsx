@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Image, View, StyleSheet } from "react-native";
+import * as SplashScreen from "expo-splash-screen";
 import HomeScreen from "./src/screens/HomeScreen";
 import ProductDetailScreen from "./src/screens/ProductDetailScreen";
 import CartScreen from "./src/screens/CartScreen";
@@ -14,29 +14,59 @@ import { CartProvider } from "./src/context/CartContext";
 import { palette } from "./src/theme";
 import { RootStackParamList } from "./src/navigation/types";
 
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const navTheme = {
   ...DefaultTheme,
-  colors: { ...DefaultTheme.colors, background: palette.background },
+  colors: { ...DefaultTheme.colors, background: "#faf7f5" },
 };
 
 export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        // Show splash screen for 3 seconds before redirecting to home
+        await new Promise(resolve => setTimeout(resolve, 3000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      // Hide the splash screen once the app is ready
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <SafeAreaProvider>
         <CartProvider>
           <NavigationContainer theme={navTheme}>
-            <StatusBar style="dark" backgroundColor={palette.background} />
+            <StatusBar style="dark" backgroundColor="#faf7f5" />
             <Stack.Navigator
-              initialRouteName="Splash"
+              initialRouteName="Home"
               screenOptions={{
                 headerShown: false,
-                contentStyle: { backgroundColor: palette.background },
-                animation: "slide_from_right",
+                contentStyle: { backgroundColor: "#faf7f5" },
+                animation: "fade",
               }}
             >
-              <Stack.Screen name="Splash" component={SplashScreen} />
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
               <Stack.Screen name="Cart" component={CartScreen} />
@@ -53,35 +83,3 @@ export default function App() {
     </GestureHandlerRootView>
   );
 }
-
-function SplashScreen({ navigation }: any) {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.replace("Home");
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, [navigation]);
-
-  return (
-    <View style={styles.splashContainer}>
-      <Image
-        source={require("./assets/splash-icon.png")}
-        style={styles.splashLogo}
-        resizeMode="contain"
-      />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  splashContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#ffffff",
-  },
-  splashLogo: {
-    width: 180,
-    height: 180,
-  },
-});

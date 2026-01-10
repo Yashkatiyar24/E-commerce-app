@@ -8,7 +8,7 @@ export const products: Product[] = [
   {
     id: "p1",
     name: "Parisian Pre-Spring Coat",
-    price: 189,
+    price: 15999,
     category: "Winterwear",
     description: "Soft tailored coat with a clean lapel and relaxed drape.",
     image:
@@ -22,7 +22,7 @@ export const products: Product[] = [
   {
     id: "p2",
     name: "Cloud Brushed Knit",
-    price: 89,
+    price: 2499,
     category: "Tops",
     description: "Featherlight knit with a plush texture and modern crew neck.",
     image:
@@ -36,7 +36,7 @@ export const products: Product[] = [
   {
     id: "p3",
     name: "Sculpted Leather Jacket",
-    price: 249,
+    price: 8999,
     category: "Outerwear",
     description: "Structured leather with clean seams and a minimal collar.",
     image:
@@ -50,7 +50,7 @@ export const products: Product[] = [
   {
     id: "p4",
     name: "Studio Denim Flare",
-    price: 119,
+    price: 3499,
     category: "Denim",
     description: "High-rise flare denim with deep indigo wash.",
     image:
@@ -64,7 +64,7 @@ export const products: Product[] = [
   {
     id: "p5",
     name: "Minimal Jersey Longsleeve",
-    price: 54,
+    price: 1299,
     category: "Basics",
     description: "Clean, close-to-body jersey with fine ribbed collar.",
     image:
@@ -78,7 +78,7 @@ export const products: Product[] = [
   {
     id: "p6",
     name: "Virat Black Rectangular Sunglasses",
-    price: 69,
+    price: 1999,
     category: "Accessories",
     description:
       "Channel unmatched confidence with the Virat Timeless Black Sunglasses. Featuring a clean rectangular silhouette, jet-black frame, and deep black lenses, these shades are a masterclass in minimalism and strength. Inspired by Virat’s signature edge and effortless cool, they offer UV400 protection with sharp, no-nonsense style.",

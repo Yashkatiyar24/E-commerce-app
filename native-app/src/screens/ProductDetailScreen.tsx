@@ -12,8 +12,6 @@ import { RootStackParamList } from "../navigation/types";
 import { getProductById } from "../data/products";
 import { palette } from "../theme";
 import { useCart } from "../context/CartContext";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useWindowDimensions } from "react-native";
 
 type Props = NativeStackScreenProps<RootStackParamList, "ProductDetail">;
 
@@ -23,8 +21,6 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
     [route.params.productId],
   );
   const { addToCart } = useCart();
-  const insets = useSafeAreaInsets();
-  const { width, height } = useWindowDimensions();
   const [selectedImage, setSelectedImage] = useState(
     product?.gallery[0] ?? product?.image ?? "",
   );
@@ -39,52 +35,45 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
   }
 
   return (
-    <View style={styles.safe}>
-      <ScrollView
-        contentContainerStyle={[
-          styles.container,
-          { paddingBottom: (insets.bottom || 8) + 12 },
-        ]}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={[styles.header, { paddingTop: insets.top || 0 }]}>
-          <TouchableOpacity
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.backIcon}>←</Text>
-          </TouchableOpacity>
-        </View>
+    <ScrollView
+      style={styles.safe}
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.backIcon}>←</Text>
+        </TouchableOpacity>
+        <Text style={styles.swipeHint}>Swipe right to close</Text>
+      </View>
 
       <View style={styles.imageCard}>
-        <View
-          style={[
-            styles.heroImageWrapper,
-            { height: Math.min(width * 1.1, height * 0.55) },
-          ]}
-        >
+        <View style={styles.heroImageWrapper}>
           <Image source={{ uri: selectedImage }} style={styles.heroImage} />
         </View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.thumbRow}
-          >
-            {product.gallery.map((img) => (
-              <TouchableOpacity
-                key={img}
-                style={[
-                  styles.thumbButton,
-                  selectedImage === img && styles.thumbButtonActive,
-                ]}
-                onPress={() => setSelectedImage(img)}
-                activeOpacity={0.9}
-              >
-                <Image source={{ uri: img }} style={styles.thumbImage} />
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.thumbRow}
+        >
+          {product.gallery.map((img) => (
+            <TouchableOpacity
+              key={img}
+              style={[
+                styles.thumbButton,
+                selectedImage === img && styles.thumbButtonActive,
+              ]}
+              onPress={() => setSelectedImage(img)}
+              activeOpacity={0.9}
+            >
+              <Image source={{ uri: img }} style={styles.thumbImage} />
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
 
       <View style={styles.section}>
         <View style={styles.productHeader}>
@@ -92,9 +81,7 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
             <Text style={styles.productName}>{product.name}</Text>
             <Text style={styles.category}>{product.category}</Text>
           </View>
-          {product.price > 0 ? (
-            <Text style={styles.price}>₹{product.price}</Text>
-          ) : null}
+          <Text style={styles.price}>€{product.price}</Text>
         </View>
         <Text style={styles.sectionLabel}>Select size</Text>
         <View style={styles.sizeRow}>
@@ -134,14 +121,11 @@ export default function ProductDetailScreen({ route, navigation }: Props) {
         }}
       >
         <Text style={styles.addButtonText}>Add to cart</Text>
-        {product.price > 0 ? (
-          <View style={styles.priceBadge}>
-            <Text style={styles.priceBadgeText}>₹{product.price * quantity}</Text>
-          </View>
-        ) : null}
+        <View style={styles.priceBadge}>
+          <Text style={styles.priceBadgeText}>€{product.price * quantity}</Text>
+        </View>
       </TouchableOpacity>
-      </ScrollView>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -151,16 +135,13 @@ const styles = StyleSheet.create({
     backgroundColor: palette.background,
   },
   container: {
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-    gap: 12,
+    padding: 16,
+    gap: 16,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 12,
-    paddingBottom: 8,
   },
   backButton: {
     width: 44,
@@ -175,18 +156,22 @@ const styles = StyleSheet.create({
   backIcon: {
     fontSize: 18,
   },
+  swipeHint: {
+    fontSize: 13,
+    color: palette.muted,
+    fontWeight: "600",
+  },
   imageCard: {
     backgroundColor: palette.card,
-    borderRadius: 0,
-    paddingHorizontal: 0,
-    paddingVertical: 0,
-    borderWidth: 0,
-    marginHorizontal: 0,
+    borderRadius: 32,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: palette.outline,
   },
   heroImageWrapper: {
-    borderRadius: 0,
+    borderRadius: 24,
     overflow: "hidden",
-    width: "100%",
+    height: 280,
     backgroundColor: "#fff",
   },
   heroImage: {
@@ -195,14 +180,13 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
   },
   thumbRow: {
-    gap: 8,
-    paddingTop: 10,
-    paddingHorizontal: 12,
+    gap: 10,
+    paddingTop: 12,
   },
   thumbButton: {
-    width: 64,
-    height: 64,
-    borderRadius: 14,
+    width: 70,
+    height: 70,
+    borderRadius: 16,
     overflow: "hidden",
     borderWidth: 1,
     borderColor: palette.outline,
@@ -230,17 +214,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   productName: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "700",
-    fontFamily: "Helvetica",
   },
   category: {
-    fontSize: 12,
+    fontSize: 13,
     color: palette.muted,
-    fontFamily: "Helvetica",
   },
   price: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "700",
     backgroundColor: "#fff",
     paddingHorizontal: 12,
@@ -250,7 +232,7 @@ const styles = StyleSheet.create({
     borderColor: palette.outline,
   },
   sectionLabel: {
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "600",
     color: palette.muted,
   },
@@ -281,8 +263,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: palette.outline,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -296,9 +278,9 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   quantityButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: "#fff",
     borderWidth: 1,
     borderColor: palette.outline,
@@ -320,9 +302,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     backgroundColor: "#000",
     borderRadius: 18,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    gap: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    gap: 10,
   },
   addButtonText: {
     color: "#fff",
@@ -334,13 +316,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 999,
-    alignSelf: "center",
-    minWidth: 60,
-    alignItems: "center",
   },
   priceBadgeText: {
     fontWeight: "700",
-    textAlign: "center",
   },
   error: {
     padding: 20,

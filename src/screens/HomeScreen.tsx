@@ -143,7 +143,7 @@ function ProductTile({
       <View style={styles.tileMeta}>
         <View style={styles.tileMetaRow}>
           <Text style={styles.tileCategory}>{product.category.toUpperCase()}</Text>
-          <Text style={styles.tilePrice}>€{product.price}</Text>
+          <Text style={styles.tilePrice}>₹{product.price}</Text>
         </View>
         <View style={styles.tileActions}>
           <TouchableOpacity onPress={onOpen} activeOpacity={0.8}>

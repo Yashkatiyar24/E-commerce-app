@@ -162,7 +162,7 @@ Checkout form uses `useState` with a structured object:
 1. **No Backend**: All data is static/dummy as per requirements
 2. **Mock Payment**: Payment flow is simulated, no actual processing
 3. **Single Size Selection**: Size pills are displayed but not tracked in cart (simplification)
-4. **Currency**: Euro (€) used for all prices
+4. **Currency**: Indian Rupee (₹) used for all prices
 5. **Image Sources**: Using external URLs for product images
 6. **Validation**: Basic regex validation for email, phone, pincode
 
