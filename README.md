@@ -1,200 +1,243 @@
-# Shopease - Mini E-Commerce Mobile App
+# 🛍️ Shopease - E-Commerce Mobile App
 
-A fully functional e-commerce mobile app built with React Native (Expo) featuring product browsing, cart management, and a complete checkout flow.
+A modern, minimalist e-commerce mobile application built with **React Native** and **Expo**. This app provides a seamless shopping experience with product browsing, cart management, and a multi-step checkout flow.
+
+---
 
 ## 📱 Screenshots
 
-The app includes 5 main screens:
-- **Home** - Product listing with grid layout
-- **Product Detail** - Image gallery, sizes, quantity selector
-- **Cart** - Item management with swipe-to-delete
-- **Checkout** - 3-step form with validation
-- **Confirmation** - Order summary
+<p align="center">
+  <img src="./screenshots/home.png" width="250" alt="Home Screen" />
+  <img src="./screenshots/cart.png" width="250" alt="Cart Screen" />
+  <img src="./screenshots/checkout.png" width="250" alt="Checkout Screen" />
+</p>
+
+| Home Screen | Cart | Checkout |
+|:-----------:|:----:|:--------:|
+| Browse products with search | Manage cart items | Multi-step checkout |
+
+---
+
+## ✨ Features
+
+- 🔍 **Product Search** - Real-time search filtering by name and category
+- 🛒 **Shopping Cart** - Add, remove, and update quantities with swipe gestures
+- 📦 **Product Details** - Full product view with size selection
+- 💳 **Multi-step Checkout** - User details, shipping address, and payment selection
+- 💾 **Persistent Cart** - Cart data saved locally using AsyncStorage
+- 🎨 **Clean UI** - Modern, minimalist design with smooth animations
+- 💰 **INR Currency** - Prices displayed in Indian Rupees (₹)
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| **React Native 0.81** | Cross-platform mobile framework |
+| **Expo SDK 54** | Development toolchain & build system |
+| **TypeScript 5.9** | Type-safe development |
+| **React Navigation 7** | Native stack navigation |
+| **React Context API** | Global state management |
+| **AsyncStorage** | Local data persistence |
+| **React Native Gesture Handler** | Swipe-to-delete functionality |
+
+---
+
+## 🏗️ State Management Approach
+
+This app uses **React Context API** for global state management:
+
+\`\`\`
+src/
+├── context/
+│   └── CartContext.tsx    # Cart state with AsyncStorage persistence
+\`\`\`
+
+### Why Context API?
+
+- ✅ **Lightweight** - No external dependencies needed
+- ✅ **Built-in** - Native to React, no learning curve
+- ✅ **Sufficient** - Perfect for small-to-medium apps
+- ✅ **Persistent** - Combined with AsyncStorage for data persistence across sessions
+
+### Cart State Features:
+- Add/remove items from cart
+- Update item quantities  
+- Calculate subtotals and totals
+- Persist cart data between app restarts
+- Clear cart after successful checkout
+
+---
+
+## 📂 Project Structure
+
+\`\`\`
+E-commerce-app/
+├── App.tsx                    # Root component with custom splash screen
+├── index.ts                   # Entry point
+├── app.json                   # Expo configuration
+├── tsconfig.json              # TypeScript configuration
+├── src/
+│   ├── context/
+│   │   └── CartContext.tsx    # Cart state management with persistence
+│   ├── data/
+│   │   └── products.ts        # Product catalog & categories
+│   ├── navigation/
+│   │   └── types.ts           # Navigation type definitions
+│   ├── screens/
+│   │   ├── HomeScreen.tsx     # Product grid with search bar
+│   │   ├── ProductDetailScreen.tsx  # Product details & add to cart
+│   │   ├── CartScreen.tsx     # Shopping cart management
+│   │   ├── CheckoutScreen.tsx # Multi-step checkout form
+│   │   └── ConfirmationScreen.tsx   # Order confirmation
+│   ├── theme.ts               # Color palette & design tokens
+│   └── types.ts               # TypeScript interfaces
+├── assets/
+│   ├── splash-full.png        # Custom splash screen image
+│   ├── icon.png               # App icon
+│   └── adaptive-icon.png      # Android adaptive icon
+└── screenshots/               # App screenshots for README
+\`\`\`
+
+---
 
 ## 🚀 Setup Instructions
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
-- Expo Go app on your mobile device (for testing)
+
+- **Node.js** v18 or higher
+- **npm** or **yarn**
+- **Expo Go** app on your mobile device ([Android](https://play.google.com/store/apps/details?id=host.exp.exponent) | [iOS](https://apps.apple.com/app/expo-go/id982107779))
 
 ### Installation
 
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/E-commerce-app-master.git
+1. **Clone the repository**
+   \`\`\`bash
+   git clone https://github.com/Yashkatiyar24/E-commerce-app.git
+   cd E-commerce-app
+   \`\`\`
 
-# Navigate to project directory
-cd E-commerce-app-master
+2. **Install dependencies**
+   \`\`\`bash
+   npm install
+   \`\`\`
 
-# Install dependencies
-npm install
+3. **Start the development server**
+   \`\`\`bash
+   npm start
+   \`\`\`
 
-# Start the development server
-npx expo start
-```
+4. **Run on your device**
+   - Scan the QR code with **Expo Go** (Android) or Camera app (iOS)
+   - Or press \`a\` for Android emulator / \`i\` for iOS simulator
 
-### Running the App
+### Available Scripts
 
-```bash
-# iOS Simulator
-npm run ios
+| Command | Description |
+|---------|-------------|
+| \`npm start\` | Start Expo development server |
+| \`npm run android\` | Run on Android device/emulator |
+| \`npm run ios\` | Run on iOS device/simulator |
+| \`npm run web\` | Run in web browser |
 
-# Android Emulator
-npm run android
+---
 
-# Web Browser
-npm run web
+## 📦 Build APK (Android)
 
-# Or scan QR code with Expo Go app
-npx expo start
-```
+To create a standalone APK file:
 
-## 🛠 Tech Stack
+\`\`\`bash
+# Install EAS CLI globally
+npm install -g eas-cli
 
-| Technology | Purpose |
-|------------|---------|
-| **React Native** | Cross-platform mobile framework |
-| **Expo SDK 54** | Development toolchain & build system |
-| **TypeScript** | Type-safe JavaScript |
-| **React Navigation** | Screen navigation (Native Stack) |
-| **React Native Gesture Handler** | Swipe gestures |
-| **AsyncStorage** | Local data persistence |
-| **React Context API** | Global state management |
+# Login to your Expo account
+eas login
 
-## 📦 State Management Approach
+# Configure EAS (first time only)
+eas build:configure
 
-### Cart State (React Context + AsyncStorage)
+# Build APK for Android
+eas build -p android --profile preview
+\`\`\`
 
-The app uses **React Context API** for global state management with the following features:
+The APK will be available for download from your Expo dashboard once the build completes.
 
-```typescript
-// CartContext provides:
-- items: CartItem[]           // Current cart items
-- addToCart()                 // Add product with quantity
-- updateQuantity()            // Modify item quantity
-- removeFromCart()            // Remove item
-- clearCart()                 // Empty cart
-- cartCount                   // Total item count
-- cartTotal                   // Total price
-- lastOrder                   // Order summary after checkout
-```
+---
 
-**Persistence**: Cart state is automatically synced to `AsyncStorage`, so cart items persist across app restarts.
+## ⚖️ Assumptions & Trade-offs
 
-### Form State (Local Component State)
+### Assumptions Made
 
-Checkout form uses `useState` with a structured object:
-```typescript
-{
-  user: { name, email, phone },
-  address: { line, city, state, pincode },
-  paymentMethod: string,
-  card: { cardNumber, expiry, cvv, name, billingAddress }
-}
-```
+| Assumption | Reasoning |
+|------------|-----------|
+| **Static Product Data** | Products are hardcoded for demo; production would use REST API |
+| **No User Authentication** | Simplified checkout flow without login requirement |
+| **Local Storage Only** | Cart data stored locally, no cloud sync |
+| **Single Currency (INR)** | App targets Indian market with Rupee pricing |
+| **Internet Required** | Product images loaded from external URLs |
 
-## ✨ Features Implemented
+### Trade-offs
 
-### Screen 1: Product Listing
-- ✅ Grid layout with 6 products
-- ✅ Product image, name, price display
-- ✅ **"+ ADD" button** for quick add to cart
-- ✅ Cart icon with live item count badge
-- ✅ **Swipe right** on product → Quick add to cart
-- ✅ **Tap** on product → Open detail screen
-- ✅ Visual highlight feedback when item added
+| Decision | Pros | Cons |
+|----------|------|------|
+| **Context API over Redux** | Simpler setup, less boilerplate, built-in to React | Less scalable for very complex state |
+| **AsyncStorage over SQLite** | Easy to implement, good for key-value storage | Limited query capabilities |
+| **Expo Managed Workflow** | Faster development, OTA updates, easier builds | Limited native module access |
+| **External Image URLs** | Smaller app bundle size | Requires internet, slower initial load |
+| **No Backend Server** | Simpler architecture, easier to demo | No real order processing or inventory |
 
-### Screen 2: Product Detail
-- ✅ Image gallery with thumbnail selector
-- ✅ Product name, price, description
-- ✅ Size selection pills
-- ✅ Quantity selector (+/–)
-- ✅ Add to cart button with dynamic price
-- ✅ Back navigation
+### Design Decisions
 
-### Screen 3: Cart
-- ✅ List of cart items with images
-- ✅ Quantity increase/decrease per item
-- ✅ Item subtotal display
-- ✅ Cart total with shipping info
-- ✅ "Proceed to Checkout" button
-- ✅ **Swipe left** on item → Remove from cart
-- ✅ Empty cart state with message
-- ✅ Disabled checkout when cart empty
+1. **Custom Splash Screen in React** - Native splash doesn't work in Expo Go, so implemented a React-based splash that shows for 3 seconds
+2. **Swipe-to-Delete in Cart** - Intuitive mobile UX pattern for removing items
+3. **Multi-step Checkout** - Better UX than single long form, allows validation at each step
+4. **Real-time Search** - Filters as user types for immediate feedback
 
-### Screen 4: Checkout (Multi-Step Form)
-- ✅ **Step 1**: User details (name, email, phone)
-- ✅ **Step 2**: Shipping address (line, city, state, pincode)
-- ✅ **Step 3**: Payment method selection (UPI, Card, COD)
-- ✅ Field validation with error messages
-- ✅ Cannot proceed without valid inputs
-- ✅ Data retained when navigating back
-- ✅ Step indicator UI
-- ✅ Card validation (Visa/Mastercard detection)
+---
 
-### Screen 5: Order Confirmation
-- ✅ Success message with order ID
-- ✅ Order summary (items, quantities, prices)
-- ✅ Shipping address display
-- ✅ Total amount
-- ✅ "Continue Shopping" button
+## 🔮 Future Improvements
 
-## 🎯 Gestures Implemented
+- [ ] Backend API integration (Node.js/Express or Firebase)
+- [ ] User authentication & profiles
+- [ ] Payment gateway integration (Razorpay/Stripe)
+- [ ] Order history & tracking
+- [ ] Push notifications for orders
+- [ ] Wishlist/favorites feature
+- [ ] Product reviews & ratings
+- [ ] Multiple currency support
+- [ ] Dark mode theme
+- [ ] Unit & integration tests
 
-| Gesture | Screen | Action |
-|---------|--------|--------|
-| Swipe Right | Product Listing | Quick add to cart |
-| Swipe Left | Cart | Remove item |
-| Tap | Product Listing | Open detail |
-| Scroll | All screens | Navigate content |
+---
 
-## 🎁 Bonus Features
+## 🐛 Known Issues
 
-- ✅ **Local Storage Persistence** - Cart survives app restart (AsyncStorage)
-- ✅ **Animations** - Highlight effect on add, smooth swipe animations
-- ✅ **Reusable Components** - ProductTile, CartItemRow, InputField, StepIndicator
-- ✅ **Responsive UI** - Adapts to screen dimensions via `useWindowDimensions`
-- ✅ **Safe Area Handling** - Proper notch/status bar support
+- Native splash screen only works in standalone builds (not Expo Go)
+- Cart badge count may briefly show stale data on first load
 
-## 📝 Assumptions & Trade-offs
-
-1. **No Backend**: All data is static/dummy as per requirements
-2. **Mock Payment**: Payment flow is simulated, no actual processing
-3. **Single Size Selection**: Size pills are displayed but not tracked in cart (simplification)
-4. **Currency**: Indian Rupee (₹) used for all prices
-5. **Image Sources**: Using external URLs for product images
-6. **Validation**: Basic regex validation for email, phone, pincode
-
-## 📁 Project Structure
-
-```
-src/
-├── context/
-│   └── CartContext.tsx      # Global cart state + persistence
-├── data/
-│   └── products.ts          # Static product data
-├── navigation/
-│   └── types.ts             # Navigation type definitions
-├── screens/
-│   ├── HomeScreen.tsx       # Product listing
-│   ├── ProductDetailScreen.tsx
-│   ├── CartScreen.tsx
-│   ├── CheckoutScreen.tsx   # Multi-step form
-│   └── ConfirmationScreen.tsx
-├── theme.ts                 # Colors, spacing, typography
-└── types.ts                 # TypeScript interfaces
-```
-
-## 🧪 Testing the App
-
-1. **Add to Cart**: Tap "+ ADD" button or swipe right on any product
-2. **View Detail**: Tap on product image
-3. **Modify Quantity**: Use +/– in detail or cart screen
-4. **Remove Item**: Swipe left on cart item
-5. **Checkout**: Fill all 3 steps with valid data
-6. **Place Order**: Complete mock payment
+---
 
 ## 📄 License
 
-MIT License - Feel free to use for learning purposes.
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+## ��‍💻 Author
+
+**Yash Katiyar**
+
+[![GitHub](https://img.shields.io/badge/GitHub-@Yashkatiyar24-181717?style=flat&logo=github)](https://github.com/Yashkatiyar24)
+
+---
+
+<p align="center">
+  <b>Made with ❤️ using React Native & Expo</b>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/React_Native-0.81-61DAFB?style=for-the-badge&logo=react" />
+  <img src="https://img.shields.io/badge/Expo-SDK_54-000020?style=for-the-badge&logo=expo" />
+  <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript" />
+</p>
