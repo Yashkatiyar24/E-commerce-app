@@ -1,8 +1,10 @@
+import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Image, View, StyleSheet } from "react-native";
 import HomeScreen from "./src/screens/HomeScreen";
 import ProductDetailScreen from "./src/screens/ProductDetailScreen";
 import CartScreen from "./src/screens/CartScreen";
@@ -27,13 +29,14 @@ export default function App() {
           <NavigationContainer theme={navTheme}>
             <StatusBar style="dark" backgroundColor={palette.background} />
             <Stack.Navigator
-              initialRouteName="Home"
+              initialRouteName="Splash"
               screenOptions={{
                 headerShown: false,
                 contentStyle: { backgroundColor: palette.background },
                 animation: "slide_from_right",
               }}
             >
+              <Stack.Screen name="Splash" component={SplashScreen} />
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
               <Stack.Screen name="Cart" component={CartScreen} />
@@ -50,3 +53,35 @@ export default function App() {
     </GestureHandlerRootView>
   );
 }
+
+function SplashScreen({ navigation }: any) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.replace("Home");
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, [navigation]);
+
+  return (
+    <View style={styles.splashContainer}>
+      <Image
+        source={require("./assets/splash-icon.png")}
+        style={styles.splashLogo}
+        resizeMode="contain"
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  splashContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#ffffff",
+  },
+  splashLogo: {
+    width: 180,
+    height: 180,
+  },
+});
