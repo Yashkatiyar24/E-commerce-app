@@ -1,6 +1,6 @@
 # 🛍️ Shopease - E-Commerce Mobile App
 
-A modern, minimalist e-commerce mobile application built with **React Native** and **Expo**. This app provides a seamless shopping experience with product browsing, cart management, and a multi-step checkout flow.
+A modern, minimalist e-commerce mobile application built with **React Native** and **Expo**. This app delivers a smooth shopping experience including product browsing, cart management, swipe gestures, and a multi-step checkout flow.
 
 ---
 
@@ -27,13 +27,13 @@ A modern, minimalist e-commerce mobile application built with **React Native** a
 
 <table align="center">
   <tr>
-    <th>Home Screen</th>
+    <th>Home</th>
     <th>Cart</th>
     <th>Checkout</th>
   </tr>
   <tr>
-    <td align="center">Browse products with search</td>
-    <td align="center">Manage cart items</td>
+    <td align="center">Product listing & search</td>
+    <td align="center">Swipe & quantity updates</td>
     <td align="center">Multi-step checkout</td>
   </tr>
 </table>
@@ -43,32 +43,32 @@ A modern, minimalist e-commerce mobile application built with **React Native** a
 ## ✨ Features
 
 | Feature | Description |
-|--------|-------------|
-| 🔍 **Product Search** | Real-time search filtering by name and category |
-| 🛒 **Shopping Cart** | Add, remove, and update quantities with swipe gestures |
-| 📦 **Product Details** | Full product view with size selection |
-| 💳 **Multi-step Checkout** | User details, shipping address, and payment selection |
-| 💾 **Persistent Cart** | Cart data saved locally using AsyncStorage |
-| 🎨 **Clean UI** | Modern, minimalist design with smooth animations |
-| 💰 **INR Currency** | Prices displayed in Indian Rupees (₹) |
+|-------|-------------|
+| 🔍 Product Search | Real-time filtering by name and category |
+| 🛒 Cart Management | Add/remove items, update quantity, swipe-to-delete |
+| 📦 Product Details | Product page with size selection |
+| 💳 Multi-step Checkout | Address, user details, and payment selection |
+| 💾 Persistent Cart | Saved locally using AsyncStorage |
+| 🎨 Clean UI | Minimal design with smooth animations |
+| 💰 INR Currency | Prices displayed in Indian Rupees |
 
 ---
 
 ## 🛠️ Tech Stack
 
 | Technology | Purpose |
-|------------|--------|
-| **React Native 0.81** | Cross-platform mobile framework |
-| **Expo SDK 54** | Development toolchain & build system |
-| **TypeScript 5.9** | Type-safe development |
-| **React Navigation 7** | Native stack navigation |
-| **React Context API** | Global state management |
-| **AsyncStorage** | Local data persistence |
-| **React Native Gesture Handler** | Swipe-to-delete functionality |
+|----------|--------|
+| React Native 0.81 | Cross-platform mobile framework |
+| Expo SDK 54 | Build & development toolchain |
+| TypeScript 5.9 | Type-safe development |
+| React Navigation 7 | Navigation system |
+| Context API | Global state management |
+| AsyncStorage | Local data persistence |
+| Gesture Handler | Swipe interactions |
 
 ---
 
-## 🏗️ State Management Approach
+## 🏗️ State Management
 
-This app uses **React Context API** for global state management.
+The app uses **React Context API** for managing global cart state.
 
