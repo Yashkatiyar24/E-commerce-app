@@ -6,12 +6,7 @@ A modern, minimalist e-commerce mobile application built with **React Native** a
 
 ## 🎬 Demo Video
 
-<p align="center">
-  <video width="320" height="640" controls autoplay muted loop playsinline>
-    <source src="https://github.com/user-attachments/assets/ec299263-ffc0-4cf8-8439-1e1e5d72ad10" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-</p>
+https://github.com/user-attachments/assets/12df1937-2b70-4195-8699-3ff3f68ccab8
 
 ---
 
